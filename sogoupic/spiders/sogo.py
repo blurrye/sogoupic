@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import scrapy
 from urllib.request import quote
+import json
+from sogoupic.items import SogoupicItem
 from sogoupic.settings import *
 
 
@@ -20,11 +22,19 @@ class SogoSpider(scrapy.Spider):
     def start_requests(self):
         category = quote(CATEGORY)
         tag = quote(TAG)
-
         for start in range(START, END + 1):
             url_next = self.url_template.format(category=category, tag=tag, start=start * 15)
             print(url_next)
             yield scrapy.Request(url_next, callback=self.parse)
 
     def parse(self, response):
-        print(response.text)
+        results = json.loads(response.text)
+        item = SogoupicItem()
+        if 'all_items' in results.keys():
+            # 每页15幅图片
+            for result in results.get('all_items'):
+                for field in item.fields:
+                    if field in result.keys():
+                        item[field] = result.get(field)
+                # item存1幅图片信息
+                yield item
