@@ -25,7 +25,10 @@ class MongoPipeline(object):
 
     def process_item(self, item, spider):
         collection_name = item.__class__.__name__
-        self.db[collection_name].insert(dict(item))
+        # 直接插入数据库
+        # self.db[collection_name].insert(dict(item))
+        # 先验证数据库，没有则添加数据
+        self.db[collection_name].update({'ori_pic_url': item['ori_pic_url']}, {'$set': item}, True)
         return item
 
     def close_spider(self, spider):
