@@ -17,7 +17,7 @@ TAG = '全部'
 # 开始页码(起始0)，每页15幅图片
 START = 0
 # 结束页码
-END = 2
+END = 260
 # mongodb
 MONGO_URI = 'localhost'
 MONGO_DATABASE = 'sogoupic'

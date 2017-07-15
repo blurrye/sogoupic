@@ -15,6 +15,7 @@ class DuplicatesPipeline(object):
     一个用于去重的过滤器，丢弃那些已经被处理过的item。
     让我们假设我们的item有一个唯一的ori_pic_url，但是我们spider返回的多个item中包含有相同的ori_pic_url
     """
+
     def __init__(self):
         self.ori_pic_urls_seen = set()
 
@@ -39,7 +40,8 @@ class MongoPipeline(object):
         )
 
     def open_spider(self, spider):
-        self.client = pymongo.MongoClient(self.mongo_uri)
+        # 多进程设置 connect=False
+        self.client = pymongo.MongoClient(self.mongo_uri, connect=False)
         self.db = self.client[self.mongo_db]
 
     def process_item(self, item, spider):
