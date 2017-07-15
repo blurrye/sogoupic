@@ -13,11 +13,14 @@
 # 分类
 CATEGORY = '美女'
 # 标签
-TAG = '女神'
+TAG = '全部'
 # 开始页码(起始0)，每页15幅图片
 START = 0
 # 结束页码
 END = 2
+# mongodb
+MONGO_URI = 'localhost'
+MONGO_DATABASE = 'sogoupic'
 
 BOT_NAME = 'sogoupic'
 
@@ -75,9 +78,9 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'sogoupic.pipelines.SogoupicPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'sogoupic.pipelines.MongoPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
